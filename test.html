@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แบบทดสอบ - PhysicsLab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@500&family=Rajdhani&family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Kanit', 'Rajdhani', sans-serif;
+      background: linear-gradient(135deg, #060d1f, #000);
+      color: white;
+      overflow-x: hidden;
+    }
+    nav {
+      background-color: #000a;
+      backdrop-filter: blur(10px);
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 60px;
+    }
+    .logo {
+      font-family: 'Audiowide', cursive;
+      font-size: 1.4em;
+      color: #0ff;
+      text-shadow: 0 0 8px #0ff;
+    }
+    ul.nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+    ul.nav-links li a {
+      font-size: 0.95em;
+      color: #fff;
+      text-decoration: none;
+      text-shadow: 0 0 6px #0ff;
+      position: relative;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    ul.nav-links li a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: #0ff;
+      transition: width 0.3s ease;
+    }
+    ul.nav-links li a:hover::after {
+      width: 100%;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+    h1 {
+      font-family: 'Orbitron', 'Kanit', sans-serif;
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff;
+      font-size: 2.2em;
+      margin-bottom: 20px;
+    }
+    .question {
+      margin-bottom: 30px;
+    }
+    .question p {
+      margin-bottom: 10px;
+      color: #ccc;
+      font-size: 1.1em;
+    }
+    .choices label {
+      display: block;
+      margin-bottom: 10px;
+      cursor: pointer;
+      background: #111;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #0ff5;
+      transition: background 0.3s;
+    }
+    .choices label:hover {
+      background: #0ff3;
+    }
+    .correct {
+      background: #0f08;
+      border-color: lime;
+    }
+    .wrong {
+      background: #f008;
+      border-color: red;
+    }
+    button {
+      background: #0ff;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      font-size: 1.1em;
+      border-radius: 8px;
+      margin-top: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #0ff;
+      transition: 0.3s ease;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px #0ff;
+    }
+    #score {
+      font-size: 1.2em;
+      margin-top: 20px;
+      color: #0f8;
+      font-weight: bold;
+      text-shadow: 0 0 6px #0f8;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">PhysicsLab</div>
+    <div class="menu-toggle" id="menu-btn">
+      <span></span><span></span><span></span>
+    </div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">หน้าแรก</a></li>
+      <li><a href="index.html#lessons">บทเรียน</a></li>
+      <li><a href="test.html">ทดสอบ</a></li>
+      <li><a href="myinfo.html">เกี่ยวกับเรา</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>แบบทดสอบ</h1>
+
+    <div class="question">
+      <p>1. หน่วยของสนามแม่เหล็กคืออะไร?</p>
+      <div class="choices">
+        <label><input type="radio" name="q1" value="0"> นิวตัน</label>
+        <label><input type="radio" name="q1" value="1"> เทสลา</label>
+        <label><input type="radio" name="q1" value="0"> โวลต์</label>
+        <label><input type="radio" name="q1" value="0"> แอมแปร์</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>2. การหาแรงจากสนามแม่เหล็กกับอนุภาคใช้กฎมือใด?</p>
+      <div class="choices">
+        <label><input type="radio" name="q2" value="0"> กฎมือขวา</label>
+        <label><input type="radio" name="q2" value="1"> กฎมือซ้าย</label>
+        <label><input type="radio" name="q2" value="0"> กฎมือเดียว</label>
+        <label><input type="radio" name="q2" value="0"> กฎสามนิ้ว</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>3. จงหาฟลักซ์เเม่เหล็กที่ผ่านพื้นที่ A ซึ๋งมีค่า เท่ากับ 0.8 ตารางเมตร เเละมีสนามเเม่เหล็กสม่ำเสมอตลอดพื้นที่ในทิศตั้งฉากเท่ากับ 0.5 เทสลา</p>
+      <div class="choices">
+        <label><input type="radio" name="q3" value="0"> 3 wb</label>
+        <label><input type="radio" name="q3" value="0"> 8 wb</label>
+        <label><input type="radio" name="q3" value="1"> 4 wb</label>
+        <label><input type="radio" name="q3" value="0"> 1 wb</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>4. ทิศทางของเเม่เหล็ก พุ่งเข้า เเละ พุ่งออก เป็นอย่างไรตามลำดับ</p>
+      <div class="choices">
+        <label><input type="radio" name="q4" value="1"> กากบาท เเละ จุด</label>
+        <label><input type="radio" name="q4" value="0"> วงกลม เเละ กากบาท</label>
+        <label><input type="radio" name="q4" value="0"> จุด เเละ กากบาท</label>
+        <label><input type="radio" name="q4" value="0"> จุด เเละ วงกลม</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>5. ลวดตัวนำยาว 15 เซนติเมตร วางตัวสนามเเม่เหล็กสม่ำเสมอ 1 เทสลา โดยทำมุม 30 องศากับทิศทางของกระเเสไฟฟ้า เมื่อกระเเสไฟฟ้า 5 เเอมเเปร์ จงหาขนาดของเเรง</p>
+        <div class="choices">
+            <label><input type="radio" name="q5" value="1"> 0.37 N</label>
+            <label><input type="radio" name="q5" value="0"> 0.0037 N</label>
+            <label><input type="radio" name="q5" value="0"> 37 N</label>
+            <label><input type="radio" name="q5" value="0"> 370 N</label>
+        </div>
+    </div>
+
+    <div class="question">
+      <p>6. ขดลวดวงกลมมีพื้นที่หน้าตัด 60 เซนติเมตร มีขดลวดพันอยู่จำนวน 600 รอบเเละมีกระเเสไฟฟ้าผ่าน 1 เเอมเเปร์ วางไว้ในสนามเเม่เหล็กที่มีขนาดเท่ากับ 1 เทสลา จงหาโมเมนต์สูงสุดที่กระทำต่อขดลวด</p>
+        <div class="choices">
+            <label><input type="radio" name="q6" value="0"> 360 Nm</label>
+            <label><input type="radio" name="q6" value="0"> 0.36 Nm</label>
+            <label><input type="radio" name="q6" value="0"> 36 Nm</label>
+            <label><input type="radio" name="q6" value="1"> 3.6 Nm</label>
+        </div>
+    </div>
+
+      <div class="question">
+      <p>7. โรงไฟฟ้าเเห่งหนึ่งต้องการส่งกำลังไฟฟ้า 1 เมกะวัตต์ ด้วยความต่างศักย์ 200 กิโลโวลต์ จะมีกระเเสไฟฟ้าในสายส่งกี่เเอมเเปร์ เเละจะมีการสูญเสียกำลังไฟฟ้าในสายส่งเท่าใด กำหนดให้สายส่งมีความต้านทานไฟฟ้า 2 โอห์ม</p>
+        <div class="choices">
+            <label><input type="radio" name="q7" value="0"> 4 เเอมเเปร์ เเละ 500 w</label>
+            <label><input type="radio" name="q7" value="1"> 5 เเอมเเปร์ เเละ 50 w</label>
+            <label><input type="radio" name="q7" value="0"> 5 เเอมเเปร์ เเละ 400 w</label>
+            <label><input type="radio" name="q7" value="0"> 4 เเอมเเปร์ เเละ 40 w</label>
+        </div>
+    </div>
+
+    <button onclick="checkAnswers()">ตรวจคำตอบ</button>
+    <div id="score"></div>
+  </div>
+
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const navLinks = document.getElementById('nav-links');
+    menuBtn.addEventListener('click', () => {
+      menuBtn.classList.toggle('active');
+      navLinks.classList.toggle('open');
+    });
+
+    function checkAnswers() {
+      let score = 0;
+      const questions = document.querySelectorAll('.question');
+      questions.forEach(q => {
+        const selected = q.querySelector('input[type="radio"]:checked');
+        const allLabels = q.querySelectorAll('label');
+        allLabels.forEach(label => label.classList.remove('correct', 'wrong'));
+
+        if (selected) {
+          if (selected.value === '1') {
+            selected.parentElement.classList.add('correct');
+            score++;
+          } else {
+            selected.parentElement.classList.add('wrong');
+          }
+        }
+      });
+
+      const total = questions.length;
+      document.getElementById('score').textContent = `คุณได้คะแนน ${score} / ${total} ข้อ`;
+    }
+  </script>
+</body>
+</html>

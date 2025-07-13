@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physics Lab - Futuristic</title>
+
+  <!-- ฟอนต์แห่งอนาคต -->
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@500&family=Rajdhani&family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Kanit', 'Rajdhani', sans-serif;
+      background: linear-gradient(135deg, #060d1f, #000);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    nav {
+      background-color: #000a;
+      backdrop-filter: blur(10px);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Audiowide', cursive;
+      font-size: 1.6em;
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      z-index: 1000;
+    }
+
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background-color: white;
+      border-radius: 2px;
+      transition: 0.4s ease;
+    }
+
+    ul.nav-links li a:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 8px #0ff, 0 0 16px #0ff;
+  }
+
+
+    ul.nav-links {
+      display: flex;
+      gap: 25px;
+      list-style: none;
+    }
+
+    ul.nav-links li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1em;
+      position: relative;
+      text-shadow: 0 0 6px #0ff;
+      transition: text-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    ul.nav-links li a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      height: 2px;
+      width: 0;
+      background: #0ff;
+      transition: 0.3s;
+    }
+
+    ul.nav-links li a:hover::after {
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      ul.nav-links {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: #000b;
+        flex-direction: column;
+        align-items: center;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out;
+      }
+
+      ul.nav-links.open {
+        max-height: 300px;
+      }
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 90px 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Orbitron', 'Kanit', sans-serif;
+      font-size: 3em;
+      color: #0ff;
+      text-shadow: 0 0 15px #0ff;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      color: #aaa;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .content {
+      max-width: 900px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    .lesson-button {
+      display: block;
+      background: #0a0a1a;
+      border: 2px solid #0ff;
+      border-radius: 20px;
+      padding: 30px 25px;
+      margin-bottom: 40px;
+      text-decoration: none;
+      color: #fff;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .lesson-button.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .lesson-button:hover {
+      background: #001f2f;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+      transform: scale(1.02);
+    }
+
+    .lesson-button h2 {
+      font-family: 'Orbitron', 'Kanit', sans-serif;
+      font-size: 1.6em;
+      color: #0ff;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .lesson-button p {
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .background-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .line {
+      position: absolute;
+      width: 1.5px;
+      height: 100%;
+      background: rgba(0, 255, 255, 0.05);
+      animation: move 6s linear infinite;
+    }
+
+    @keyframes move {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+
+    html {
+    scroll-behavior: smooth;
+  }
+  .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Audiowide', cursive;
+  font-size: 1.4em;
+  color: #0ff;
+  text-shadow: 0 0 8px #0ff;
+  line-height: 1;
+}
+
+.logo-img {
+  height: 36px;
+  width: auto;
+  filter: drop-shadow(0 0 4px #0ff);
+}
+
+.logo-text {
+  display: inline-block;
+}
+
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <img src="img/logo.png" alt="PhysicsLab Logo" class="logo-img">
+    <span class="logo-text">PhysicsLab</span>
+  </div>
+
+  <div class="menu-toggle" id="menu-btn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#">หน้าแรก</a></li>
+    <li><a href="#lessons">บทเรียน</a></li>
+    <li><a href="test.html">ทดสอบ</a></li>
+    <li><a href="myinfo.html">เกี่ยวกับเรา</a></li>
+  </ul>
+</nav>
+<div class="hero">
+  <h1>PHYSICSLAB</h1>
+  <p>
+    จัดทำโดย<br>
+    นักเรียนอำมาตย์พานิชนุกูล ม.6/4 <br>
+    เสนอ <br>
+    คุณครู รัชดาพร ไพศาสสถาน
+  </p>
+</div>
+
+  <div class="content" id="lessons">
+    <a href="magelec.html" class="lesson-button visible">
+      <h2>เเม่เหล็กเเละไฟฟ้า</h2>
+      <p>แม่เหล็กและไฟฟ้าเป็นปรากฏการณ์ทางกายภาพที่เกี่ยวข้องกันอย่างใกล้ชิด โดยไฟฟ้าเป็นต้นกำเนิดของแม่เหล็ก และแม่เหล็กก็สามารถส่งผลต่อไฟฟ้าได้เช่นกัน ความสัมพันธ์นี้เรียกว่า แม่เหล็กไฟฟ้า ซึ่งเป็นหนึ่งในแรงพื้นฐานของธรรมชาติ </p>
+    </a>
+
+    <a href="#" class="lesson-button visible">
+      <h2>//</h2>
+      <p>coming soon</p>
+    </a>
+
+    <a href="#" class="lesson-button visible">
+      <h2>//</h2>
+      <p>coming soon</p>
+    </a>
+  </div>
+
+  <div class="background-lines"></div>
+
+  <script>
+    // พื้นหลังลำแสง
+    const container = document.querySelector('.background-lines');
+    for (let i = 0; i < 50; i++) {
+      const line = document.createElement('div');
+      line.classList.add('line');
+      line.style.left = `${Math.random() * 100}%`;
+      line.style.animationDelay = `${Math.random() * 6}s`;
+      container.appendChild(line);
+    }
+
+    // toggle เมนูมือถือ
+    const menuBtn = document.getElementById('menu-btn');
+    const navLinks = document.getElementById('nav-links');
+    menuBtn.addEventListener('click', () => {
+      menuBtn.classList.toggle('active');
+      navLinks.classList.toggle('open');
+    });
+
+    // แอนิเมชันเมื่อเลื่อน
+    const sections = document.querySelectorAll('.lesson-button');
+    const showOnScroll = () => {
+      sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if (top < window.innerHeight - 100) {
+          sec.classList.add('visible');
+        }
+      });
+    };
+    window.addEventListener('scroll', showOnScroll);
+    showOnScroll();
+  </script>
+</body>
+<footer style="text-align: center; margin: 40px 0; font-size: 0.9em; color: #888;">
+  ไอคอนโดย <a href="https://www.flaticon.com/free-icons/physics" title="physics icons" style="color:#0ff;">Freepik - Flaticon</a>
+</footer>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>เเม่เหล็กเเละไฟฟ้า - PhysicsLab</title>
+
+  <!-- ฟอนต์ไทย-อังกฤษแนวอนาคต -->
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@500&family=Rajdhani&family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Kanit', 'Rajdhani', sans-serif;
+      background: linear-gradient(135deg, #060d1f, #000);
+      color: white;
+      overflow-x: hidden;
+    }
+
+nav {
+  background-color: #000a;
+  backdrop-filter: blur(10px);
+  padding: 10px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 60px;
+}
+
+.logo {
+  font-family: 'Audiowide', cursive;
+  font-size: 1.4em;
+  color: #0ff;
+  text-shadow: 0 0 8px #0ff;
+  line-height: 1;
+}
+
+ul.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.nav-links li a {
+  font-size: 0.95em;
+  padding: 6px 10px;
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s;
+  position: relative;
+}
+
+ul.nav-links li a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #0ff;
+  transition: width 0.3s ease;
+}
+
+ul.nav-links li a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  ul.nav-links {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #000c;
+    flex-direction: column;
+    align-items: center;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+  }
+
+  ul.nav-links.open {
+    max-height: 250px;
+  }
+
+  .menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+}
+
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+
+    h1 {
+      font-family: 'Orbitron', 'Kanit', sans-serif;
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff;
+      font-size: 2.2em;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #0ff;
+      font-family: 'Kanit', sans-serif;
+      margin-top: 40px;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #ccc;
+      line-height: 1.7;
+      font-size: 1.1em;
+    }
+
+    ul {
+      margin-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    ul li {
+      margin-bottom: 8px;
+      font-size: 1em;
+      color: #ccc;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease-out;
+    }
+    section.show {
+    opacity: 1;
+    transform: translateY(0);
+    }
+
+    img {
+  max-width: 100%;
+  height: auto;
+  margin: 20px 0;
+  border-radius: 10px;
+  border: 1px solid #0ff2;
+}
+h2[id], h3[id] {
+  scroll-margin-top: 80px;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+    text-shadow: 0 0 5px #ffffff;
+}
+
+    ul.nav-links li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1em;
+  text-shadow: 0 0 6px #0ff;
+  position: relative;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+ul.nav-links li a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #0ff;
+  transition: width 0.3s ease;
+}
+
+ul.nav-links li a:hover::after {
+  width: 100%;
+}
+
+a.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #0ff;
+  color: #000;
+  padding: 10px 14px;
+  border-radius: 50px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 0 10px #0ff;
+  transition: all 0.3s ease;
+}
+
+a.back-to-top:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 16px #0ff, 0 0 32px #0ff;
+}
+
+a.back-to-top:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 8px #0ff;
+}
+
+.menu-toggle span {
+  height: 3px;
+  width: 25px;
+  background-color: white;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+  </style>
+</head>
+<body>
+
+  <nav>
+  <div class="logo">PhysicsLab</div>
+  <div class="menu-toggle" id="menu-btn">
+    <span></span><span></span><span></span>
+  </div>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">หน้าแรก</a></li>
+    <li><a href="index.html#lessons">บทเรียน</a></li>
+    <li><a href="test.html">ทดสอบ</a></li>
+    <li><a href="myinfo.html">เกี่ยวกับเรา</a></li>
+  </ul>
+</nav>
+
+  <div class="container">
+    <h1>เเม่เหล็กเเละไฟฟ้า</h1>
+    <p>
+      แม่เหล็กและไฟฟ้าเป็นปรากฏการณ์ทางกายภาพที่เกี่ยวข้องกันอย่างใกล้ชิด โดยไฟฟ้าเป็นต้นกำเนิดของแม่เหล็ก และแม่เหล็กก็สามารถส่งผลต่อไฟฟ้าได้เช่นกัน ความสัมพันธ์นี้เรียกว่า แม่เหล็กไฟฟ้า ซึ่งเป็นหนึ่งในแรงพื้นฐานของธรรมชาติ
+    </p>
+<div style="margin-top: 30px; margin-bottom: 30px;">
+    <h2 style="margin-bottom: 10px;">หัวข้อในบทนี้</h2>
+    <ul>
+      <li><a href="#M1">1.1 สนามเเม่เหล็ก</a></li>
+      <li><a href="#M2">1.2 เเรงเเม่เหล็ก</a></li>
+      <li><a href="#M3">1.3 โมเมนต์ของเเรงคู่ควบเนื่องจากสนามเเม่เหล็ก</a></li>
+      <li><a href="#M4">1.4 กระเเสไฟฟ้าเหนี่ยวนำเเละ EMF เหนี่ยวนำ</a></li>
+      <li><a href="#M5">1.5 ไฟฟ้ากระเเสสลับ</a></li>
+    </ul>
+</div>
+    <section>
+    <h2 id="M1">สนามเเม่เหล็ก</h2>
+    <p>
+      เเม่เหล็กเป็นสารที่สามารถดูดเเละผลักกันเอง มี 2 ขั้ว คือ ขั้วเหนือ(N) เเละขั้วใต้(S) จะเกิดเเรงหผลักเมื่อขั้วเดียวกับเข้าใกล้กันเเละเกิดเเรงดูดเมื่อขั้วตรงข้ามเข้าใกล้กัน นอกจากนี้ยังสามารถดูดติดกับสิ่งของที่มีส่วนประกอบหลักเป็น เหล็ก โคบอลต์ เเละนิกเกิล สารเหล่านี้เรียกว่า <strong>สารเเม่เหล็ก</strong>
+    </p>
+    <h3>เส้นสนามเเม่เหล็ก</h3>
+    <p>เส้นสมมติที่เเสดงอำนาจการกระทำของเเม่เหล็ก (magnetic force) มีทิศทางการพุ่งจากขั้วเหนือไปยังขั้วใต้</p>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgaAQxli-IG3gkBklff8c9tQNW9ja-VleqwA&s" alt="">
+    <img src="https://lh4.googleusercontent.com/mA-w4sJZv7X-nRk9NUFxVEsaWPxlJ752zbYnG7HHui1rKTSXfOnGcSYiQ8ljJzDlIflZu6jbcbOiATF6MlLbrsPSw7Gw_Jctzap6qo6SdmrtDIUYM-m10dj9-3ZXDh0_31rlFx9prfkQ-e5_wA" alt="">
+    <p>เมื่อนำเเท่งเเม่เหล็กที่มีขั้วเหนือมาวางใกล้กัน จะสังเกตุเห็นว่ามีบริเวณที่อยู่ระหว่างขั้วเเม่เหล้กนั้น มีเส้นสนามเเม่เหล็กหนาเเน่นน้อย เเสดงว่าบริเวณนั้นสนามเเม่เหล็กมีค่าน้อยเเละตำเเหน่งที่สนามเเม่เหล็กมีค่าเป็นศูนย์ เรียกตำเเหน่งนี้ว่า <strong>จุดสะเทิน (neutral point)</strong></p>
+    <h3>สนามเเม่เหล็ก</h3>
+    <p>คือ อัตราส่วนชองจำนวนเส้นสนามเเม่เหล็ก หรือ <strong>ฟลักซ์เเม่เหล็ก (magnetic flux)</strong>ต่อพื้นที่ตั้งฉากกับเส้นสนามเเม่เหล็กนั้น บริเวณที่มีสนามเเม่เหล็กมาจะรู้สึกได้ถึงเเรงเเม่เหล็กมากเช่นเดียวกัน</p>
+    <img src="https://physicskruadd.wordpress.com/wp-content/uploads/2012/03/0oh.jpg" alt="">
+    <p>B คือ ขนาดของสนามเเม่เหล็กมีหน่วยเป็นเวเบอร์ต่อตารางเมตร หรือ เทสลา<br>
+     Φ คือ ฟลักซ์เเม่เหล็ก มีหน่วยเป็น เวเบอร์<br>
+    a คือ พื้นที่ตั้งฉากกับสนามเเม่เหล็ก หน่วยเป็นตารางเมตร<br>
+    θ คือ มุมระหว่างสนามเเม่เหล็กเเละระนาบพื้นที่<br></p>
+    <h3>สนามเเม่เหล็กจากกระเเสไฟฟ้าที่ผ่านลวดตัวนำ</h3>
+    <p>สนามเเม่เหล็กจากกระเเสไฟฟ้าที่ผ่านลวดตัวนำเส้นตรง จะเกิดสนามเเม่เหล็กรอบลวดตัวนำ หาทิศทางของสนามเเม่เหล็กโดยใช้นิ้วหัวเเม่มือของมือขวาชี้ไปตามทิศทางของกระเเสไฟฟ้าเเล้วกำมือขวารอบลวดตัวนำเส้นตรง ทิศทางการวนของนิ้วทั้งสี่จะเเสดงทิศทางของสนามเเม่เหล็ก เรียกหลักการนี้ว่า <strong>กฎมือขวา (Right Hand Rule)</strong></p>
+    <img src="https://e1.pngegg.com/pngimages/440/939/png-clipart-croix-regle-de-droite-regle-de-flemings-pour-gaucher-pour-moteurs-champ-magnetique-courant-electrique-regle-de-poignee-droite-magnetisme-produit-croise.png" alt="">
+    <p>สำหรับ<strong>ตัวนำวงกลมเเละโซเลนอยด์</strong>ให้นิ้วทั้งสี่วนตามทิศทางของกระเเสไฟฟ้าในลวดตัวนำวงกลมนิ้วหัวเเม่มือจะชี้ไปตามทิศทางของสนามเเม่เหล็ก</p>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOUL0WbcMk94zSSN00X8mlsAb6iMWrhlNFPw&s" alt="">
+    <p>การเขียนทิศทางของสนามเเม่เหล็ก ใช้สัญลักษณ์กากบาท (x) เเสดงสนามเเม่เหล็กที่ชี้เข้าตั้งฉากกับระนาบ เเละใช้สัญลักษณ์จุด (.) เเสดงสนามเเม่เหล็กที่ชี้ออกตั้งฉากกับระนาบ</p>
+    <img src="https://www.scimath.org/images/comments/original_1f239046ffa4173f9a2c4afaa860ba86.png" alt="">
+    </section>
+    <section>
+    <h2 id="M2">เเรงเเม่เหล็ก</h2>
+    <h3>เเรงเเม่เหล็กที่กระทำต่ออนุภาคที่มีประจุไฟฟ้า</h3>
+    <p>เมื่ออนุภาคที่มีประจุไฟฟ้า เคลื่อนที่ในสนามแม่เหล็ก ซึ่งทิศของความเร็วตั้งฉากกับทิศของสนามแม่เหล็กจะมีแรง เนื่องจากสนามแม่เหล็กกระทำกับอนุภาค โดยหาทิศทางของแรงที่เกิดขึ้น ได้จากกฎมือซ้าย (Left Hand Rule) <br>
+    **กรณีประจุไฟฟ้าลบ เเรงที่เกิดจะมีทิศตรงข้ามกับนิ้วโป้ง</p>
+    <img src="https://sa-thai.com/wp-content/uploads/2021/06/Scanned-39.jpg" alt="">
+    <h3>ขนาดของเเรงเเม่เหล็ก</h3>
+    <h3>F = qvBsinθ</h3>
+    <p>q คือ ขนาดของประจุไฟฟ้า มีหน่วยเป็น คูลอมบ์<br>
+    v คือ ขนาดของความเร็ว มีหน่วยเป็น เมตรต่อวินาที<br>
+    B คือ ขนาดของสนามเเม่เหล็ก มีหน่วยเป็น เทสลา<br>
+    F คือ ขนาดของเเรง มีหน่วยเป็น นิวตัน<br>
+    **กรณีประจุเคลื่อนที่ขนานกับสนามเเม่เหล็ก จะไม่มีเเรงเกินขึ้น</p>
+    <h3>เเรงระหว่างลวดตัวนำที่มีกระเเสไฟฟ้า</h3>
+    <h3>F = ILBsinθ</h3>
+    <p>F คือ ขนาดของเเรง มีหน่วยเป็น นิวตัน<br>
+    I คือ กระเเสไฟฟ้าที่ผ่านลวดตัวนำ มีหน่วยเป็น เเอมเเปร์<br>
+    L คือ ความยาวลวดตัวนำที่อยู่ในสนามเเม่เหล็ก มีหน่วยเป็น เมตร<br>
+    B คือ ขนาดของสนามเเม่เหล็กมีหน่วยเทสลา<br>
+    θ คือ มุมระหว่างกระเเสไฟฟ้า I ที่ผ่านลวดตัวนำกับสนามเเม่เหล็ก</p>
+    <p>เมื่อมีกระเเสไฟฟ้าไหลผ่านในลวดตัวนำสองเส้น จะเกิดสนามเเม่เหล็กขึ้นจากลวดตัวนำทั้งสอง ทำให้เเรงจากกระเเสไฟฟ้าที่ไหลผ่านในลวดตัวนำอยู่ในสนามเเม่เหล็กของกันเเละกัน ดังนั้น จะเกิดเเรงกระทำต่อกันเเละกัน</p>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi900-tOB6w3SR7PplLuO2vwzYgdSVVwh5Fg&s" alt="">
+    </section>
+    <section>
+    <h2 id="M3">โมเมนต์ของเเรงคู่ควบเนื่องจากสนามเเม่เหล็ก</h2>
+    <h3>โมเมนต์ของเเรงคู่ควบที่กระทำต่อลวด</h3>
+    <p>เมื่อมีขดลวดที่มีกระเเสไฟฟ้าไหลผ่าน อยู่ในสนามเเม่เหล็กจะเกิดเเรงกระทำต่อขดลวด โดยเเรงทั้งสองมีขนาดเท่ากันเเต่มีทิศตรงข้ามกัน ทำให้เกิดโมเมนต์ของเเรงคู่ควบที่กระทำต่อลวด</p>
+    <img src="https://quizizz.com/media/resource/gs/quizizz-media/quizzes/f95cd879-848c-4d90-8eb3-42da04664535" alt="">
+    <h3>M = BINAcosθ</h3>
+    <p>M คือ โมเมนต์ของเเรงคู่ควบ<br>
+    B คือ ขนาดของสนามเเม่เหล็ก<br>
+    I คือ กระเเสไฟฟ้าที่ผ่านลวดตัวนำ<br>
+    N คือ จำนวนขดลวด<br> 
+    A คือ พื้นที่ของขดลวด</p>
+    </section>
+    <section>
+    <h2 id="M4">กระเเสไฟฟ้าเหนี่ยวนำเเละ EMF เหนี่ยวนำ</h2>
+    <h3>กฏการเหนี่ยวนำของฟาราเดย์</h3>
+    <p>เมื่อมีการเคลื่อนที่ของกระเเสระหว่างขดลวดกับเเม่เหล็กจะเกิดการเปลี่ยนเเปลงของ ΔΦ ส่งผลให้ EMF เหนี่ยวนำในขดลวดตัวนำนั้นมีค่าขึ้นกับอัตราการเปลี่ยนเเปลงของ ฟลักซ์เเม่เหล็กที่ตัดขดลวดตัวนำส่วนทิศทางของกระเเสเหนี่ยวนำเป็นไปตาม<strong>กฏของเลนซ์ (Lenz's law)</strong></p>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxTSNX0K3xIfaPp_fqBBGjPTnxFdBQQUPwps42tLA_Bsk8sWHd0POR02UWaRybCB6s_xo&usqp=CAU" alt="">
+    <img src="https://www.electrical4u.com/wp-content/uploads/Lenzs-law-equation.png" alt="">
+    <p>ε คือ เเรงเคลื่อนไฟฟ้าเหนี่ยวนำ / EMF<br>
+    (ΔΦ/Δt) คือ อัตราการเปลี่ยนเเปลงของฟลักซ์เเม่เหล็ก<br>
+    N คือ จำนวนรอบขดลวด</p>
+    </section>
+    <section>
+    <h2 id="M5">ไฟฟ้ากระเเสสลับ</h2>
+    <h3>ค่า rms ของความต่างศักย์เเละกระเเสไฟฟ้าของไฟฟ้ากระเเสสลับ</h3>
+    <p>เนื่องจากไฟฟ้ากระเเสสลับ คือ กระเเสไฟฟ้าที่มีทิศทางเปลี่ยนสลับไปมาเเละค่าไม่คงที่ สมการความต่างศักย์ v = v₀sinωt เเละสมการกระเเสไฟฟ้า i = i₀sinωt ของไฟฟ้ากระเเสสลับจะเปลี่ยนเเปลงตตามเวลาในรูปของฟังก์ชันไซน์เเบบเดียวกัน</p>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2pxloJ8ywCx39mJcTgFFsgiPnNJSqIAczHA&s" alt="">
+    <h3>การส่งกำลังเเละการสูญเสียกำลังไฟฟ้า</h3>
+    <p>การส่งกำลังไฟฟ้าตามสายไฟ ขึ้นอยู่กับกระเเสไฟฟ้าเเละความต่างศักย์ไฟฟ้าที่ส่ง</p>
+    <h3>P = IV</h3>
+    <p>เเต่สายส่งมีความต้านทาน การส่งกระเเสไฟฟ้าไปตามสายส่ง จะเกิดการสูญเสียกำลังไฟฟ้าไปในสายส่ง</p>
+    <h3>P(สูญเสีย) = I²R</h3>
+    <p>การส่งกำลังไฟฟ้าจากโรงไฟฟ้าจะถูกปรับความ ต่างศักย์ให้สูงขึ้นเพื่อส่งไปยังสถานีไฟฟ้าต้นทาง และจะค่อย ๆ ปรับลดลงเมื่อถูกส่งไปยังสถานี ไฟฟ้าย่อยในเขตชุมชนและปรับลดความต่างศักย์ ให้เหมาะสมต่อการใช้งานเมื่อไปยังโรงงาน อุตสาหกรรมและตามบ้านเรือน</p>
+    <h3>หม้อเเปลงไฟฟ้า</h3>
+    <p>เป็นอุปกรณ์ที่ใช้ในการปรับค่าความต่างศักย์ ขดลวดหม้อเเปลงด้านที่ต่ออยู่กับเเหล่งจ่ายกระเเสไฟฟ้า เรียกว่า <strong>ขดลวดปฐมภูมิ</strong> ขกลวดหม้อเเปลงด้านที่ต่ออยู่กับเครื่องใช้ไฟฟ้า เรียกว่า<strong> ขดลวดทุติยภูมิ</strong></p>
+    <h3>ε₂/ε₁ = N₂/N₁</h3>
+    <p>ε₁ คือ EMF ที่มาจากเเหล่งจ่ายกระเเสไฟฟ้าหรือความต่างศักย์ที่ลดขวดปฐมภูมิ<br>
+    ε₂ คือ EMF เหนี่ยวนำหรือความต่างศักย์ที่ลดขวดทุติยภูมิ<br>
+    N₁ คือ จำนวนรอบขดลวดปฐมภูมิ<br>
+    N₂ คือ จำนวนรอบขดลวดทุติยภูมิ</p>
+    <h3>หม้อเเปลงมี 2 ประเภท ขึ้นอยู่กับวัตถุประสงค์</h3>
+    <p><strong>1.หม้อเเปลงขึ้น</strong> จำนวนขดลวดทุติยภูมิมากกว่าขดลวดปฐมภูมิ ใช้เพิ่มความต่างศักย์<br>
+        <strong>2.หม้อเเปลงลง</strong> จำนวนขดลวดทุติยภูมิน้อยกว่าขดลวดปฐมภูมิ ใช้เพิ่มความต่างศักย์
+    </p>
+    </section>
+</div>
+<a href="#" class="back-to-top">↑ กลับด้านบน</a>
+
+
+  <script>
+  const menuBtn = document.getElementById('menu-btn');
+  const navLinks = document.getElementById('nav-links');
+
+  menuBtn.addEventListener('click', () => {
+    menuBtn.classList.toggle('active');
+    navLinks.classList.toggle('open');
+  });
+
+    const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  });
+
+  document.querySelectorAll("section").forEach(section => {
+    observer.observe(section);
+  });
+</script>
+
+</body>
+</html>
